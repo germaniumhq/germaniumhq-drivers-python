@@ -5,7 +5,6 @@ from .available_driver import get_available_driver_from_path
 from .configurable_settings import is_germanium_use_path_driver_set
 from .driver_registry import is_driver_up_to_date
 from .install_driver import install_driver
-from .platform import Platform
 
 
 def ensure_driver(browser):
@@ -51,3 +50,9 @@ def detect_platform():
         raise "Unsupported platform: %s. Only linux, win and mac are supported." % sys.platform
 
     return Platform(operating_system, bits)
+
+
+class Platform(object):
+    def __init__(self, operating_system, bits):
+        self.operating_system = operating_system
+        self.bits = bits

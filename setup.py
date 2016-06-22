@@ -15,26 +15,27 @@ setup(
 
     install_requires=[],
     packages=[
-        'drivers.binary.chrome.linux.32',
-        'drivers.binary.chrome.linux.64',
-        'drivers.binary.chrome.mac.32',
-        'drivers.binary.chrome.win.32',
-        'drivers.binary.firefox.linux.64',
-        'drivers.binary.firefox.mac.32',
-        'drivers.binary.firefox.win.32',
-        'drivers.binary.ie.win.32',
-        'drivers.binary.ie.win.64',
+        'germaniumdrivers',
+        'germaniumdrivers.binary.chrome.linux.32',
+        'germaniumdrivers.binary.chrome.linux.64',
+        'germaniumdrivers.binary.chrome.mac.32',
+        'germaniumdrivers.binary.chrome.win.32',
+        'germaniumdrivers.binary.firefox.linux.64',
+        'germaniumdrivers.binary.firefox.mac.32',
+        'germaniumdrivers.binary.firefox.win.32',
+        'germaniumdrivers.binary.ie.win.32',
+        'germaniumdrivers.binary.ie.win.64',
     ],
     package_data={
-        'drivers.binary.chrome.linux.32' : ['chromedriver'],
-        'drivers.binary.chrome.linux.64' : ['chromedriver'],
-        'drivers.binary.chrome.mac.32' : ['chromedriver'],
-        'drivers.binary.chrome.win.32' : ['chromedriver.exe'],
-        'drivers.binary.firefox.linux.64' : ['geckodriver'],
-        'drivers.binary.firefox.mac.32' : ['geckodriver'],
-        'drivers.binary.firefox.win.32' : ['geckodriver.exe'],
-        'drivers.binary.ie.win.32' : ['IEDriverServer.exe'],
-        'drivers.binary.ie.win.64' : ['IEDriverServer.exe']
+        'germaniumdrivers.binary.chrome.linux.32' : ['chromedriver'],
+        'germaniumdrivers.binary.chrome.linux.64' : ['chromedriver'],
+        'germaniumdrivers.binary.chrome.mac.32' : ['chromedriver'],
+        'germaniumdrivers.binary.chrome.win.32' : ['chromedriver.exe'],
+        'germaniumdrivers.binary.firefox.linux.64' : ['geckodriver'],
+        'germaniumdrivers.binary.firefox.mac.32' : ['geckodriver'],
+        'germaniumdrivers.binary.firefox.win.32' : ['geckodriver.exe'],
+        'germaniumdrivers.binary.ie.win.32' : ['IEDriverServer.exe'],
+        'germaniumdrivers.binary.ie.win.64' : ['IEDriverServer.exe']
     }
 )
 
