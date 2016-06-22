@@ -1,3 +1,6 @@
+import platform
+import sys
+
 from .available_driver import get_available_driver_from_path
 from .configurable_settings import is_germanium_use_path_driver_set
 from .driver_registry import is_driver_up_to_date
@@ -37,5 +40,14 @@ def ensure_driver(browser):
 
 
 def detect_platform():
-    print("STUB: detect_platform - linux, 64")
-    return Platform("linux", "64")
+    bits = "64" if platform.machine().endswith("64") else "32"
+    if sys.platform.startswith("linux"):
+        operating_system = "linux"
+    elif sys.platform.startswith("win"):
+        operating_system = "win"
+    elif sys.platform.startswith("darwin"):
+        operating_system = "mac"
+    else:
+        raise "Unsupported platform: %s. Only linux, win and mac are supported." % sys.platform
+
+    return Platform(operating_system, bits)

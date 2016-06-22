@@ -3,6 +3,7 @@ import pkgutil
 import stat
 
 from .driver_registry import get_driver_name, get_internal_driver_path, is_driver_up_to_date
+from .configurable_settings import get_germanium_drivers_folder
 
 
 def install_driver(platform, browser):
@@ -14,7 +15,7 @@ def install_driver(platform, browser):
     """
     driver_name = get_driver_name(platform, browser)
     internal_driver_path = get_internal_driver_path(platform, browser)
-    drivers_folder = get_drivers_folder()
+    drivers_folder = get_germanium_drivers_folder()
 
     os.makedirs(drivers_folder, exist_ok=True)
 
@@ -37,8 +38,3 @@ def install_driver(platform, browser):
         os.chmod(full_path_to_driver, new_file_stat.st_mode | stat.S_IEXEC)
 
     return full_path_to_driver
-
-
-def get_drivers_folder():
-    print("STUB: get_drivers_folder(): /tmp")
-    return "/tmp/germanium-drivers/"
