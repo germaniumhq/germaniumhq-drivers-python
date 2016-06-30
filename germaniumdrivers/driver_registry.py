@@ -15,21 +15,21 @@ def get_driver_name(platform, browser):
         if browser == "chrome":
             return "chromedriver"
         elif browser == "firefox":
-            return "geckodriver"
+            return "wires"
         else:
             return None
     elif platform.operating_system == "mac":
         if browser == "chrome":
             return "chromedriver"
         elif browser == "firefox":
-            return "geckodriver"
+            return "wires"
         else:
             return None
     elif platform.operating_system == "win":
         if browser == "chrome":
             return "chromedriver.exe"
         elif browser == "firefox":
-            return "geckodriver.exe"
+            return "wires.exe"
         elif browser == "ie":
             return "IEDriverServer.exe"
         else:
