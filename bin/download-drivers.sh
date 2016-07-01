@@ -2,11 +2,13 @@
 
 GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/..)
 
+set -e
+
 rm -fr $GERMANIUM_FOLDER/germaniumdrivers/binary
 mkdir $GERMANIUM_FOLDER/germaniumdrivers/binary
 
 CHROMEDRIVER_VERSION=2.22
-FIREFOXDRIVER_VERSION=0.8.0
+FIREFOXDRIVER_VERSION=0.9.0
 IEDRIVER_VERSION=2.53.1
 IEDRIVER_VERSION_MAJOR=2.53
 
@@ -39,22 +41,20 @@ unzip /tmp/germaniumdrivers/chromedriver_mac32.zip
 # Firefox drivers
 #
 mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/linux/64
-mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/win/32
+mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/win/64
 mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/mac/32
 
 cd /tmp/germaniumdrivers
-wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-$FIREFOXDRIVER_VERSION-linux64.gz
-wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-$FIREFOXDRIVER_VERSION-OSX.gz
-wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-win32.zip
+wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-linux64.tar.gz
+wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-mac.tar.gz
+wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-win64.zip
 
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/linux/64
-gunzip -c /tmp/germaniumdrivers/geckodriver-$FIREFOXDRIVER_VERSION-linux64.gz > geckodriver
-chmod +x geckodriver
-cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/win/32
-unzip /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-win32.zip
+tar -zxvf /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-linux64.tar.gz
+cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/win/64
+unzip /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-win64.zip
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/mac/32
-gunzip -c /tmp/germaniumdrivers/geckodriver-$FIREFOXDRIVER_VERSION-OSX.gz > geckodriver
-chmod +x geckodriver
+tar -zxvf /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-mac.tar.gz
 
 #
 # IE Driver

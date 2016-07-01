@@ -6,7 +6,7 @@ with open('README.rst') as readme_file:
 
 setup(
     name='germaniumdrivers',
-    version='1.7.14',
+    version='1.8.0',
     description='The germanium project: Selenium WebDriver testing API that doesn\'t disappoint. (tested WebDrivers package)',
     long_description = readme,
     author='Bogdan Mustiata',
@@ -22,7 +22,7 @@ setup(
         'germaniumdrivers.binary.chrome.win.32',
         'germaniumdrivers.binary.firefox.linux.64',
         'germaniumdrivers.binary.firefox.mac.32',
-        'germaniumdrivers.binary.firefox.win.32',
+        'germaniumdrivers.binary.firefox.win.64',
         'germaniumdrivers.binary.ie.win.32',
         'germaniumdrivers.binary.ie.win.64',
     ],
@@ -33,7 +33,7 @@ setup(
         'germaniumdrivers.binary.chrome.win.32' : ['chromedriver.exe'],
         'germaniumdrivers.binary.firefox.linux.64' : ['geckodriver'],
         'germaniumdrivers.binary.firefox.mac.32' : ['geckodriver'],
-        'germaniumdrivers.binary.firefox.win.32' : ['geckodriver.exe'],
+        'germaniumdrivers.binary.firefox.win.64' : ['geckodriver.exe'],
         'germaniumdrivers.binary.ie.win.32' : ['IEDriverServer.exe'],
         'germaniumdrivers.binary.ie.win.64' : ['IEDriverServer.exe']
     }

@@ -59,7 +59,7 @@ def get_internal_driver_path(platform, browser):
         elif platform.operating_system == "mac":
             return "binary/firefox/mac/32/geckodriver"
         elif platform.operating_system == "win":
-            return "binary/firefox/win/32/geckodriver.exe"
+            return "binary/firefox/win/64/geckodriver.exe"
         else:
             raise unknown_browser(platform, browser)
     elif browser == "ie":
