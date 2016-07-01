@@ -1,5 +1,5 @@
 import os
-import pkgutil
+import pkg_resources
 import stat
 
 from .driver_registry import get_driver_name, get_internal_driver_path, is_driver_up_to_date
@@ -28,7 +28,7 @@ def install_driver(platform, browser):
     if is_driver_up_to_date(platform, browser, full_path_to_driver):
         return full_path_to_driver
 
-    data = pkgutil.get_data(__name__, internal_driver_path)
+    data = pkg_resources.resource_stream(__name__, internal_driver_path).read()
     new_file = open(full_path_to_driver, 'wb')
     new_file.write(data)
     new_file.close()

@@ -1,4 +1,4 @@
-import pkgutil
+import pkg_resources
 
 from .configurable_settings import is_germanium_use_ie_driver_for_platform
 from .sha_hash import sha1_file, sha1_data
@@ -81,7 +81,7 @@ def is_driver_up_to_date(platform, browser, available_driver):
         available_driver_sha1sum = sha1_file(available_driver)
 
     internal_driver_path = get_internal_driver_path(platform, browser)
-    internal_sha1sum = sha1_data(pkgutil.get_data(__name__, internal_driver_path))
+    internal_sha1sum = sha1_data(pkg_resources.resource_stream(__name__, internal_driver_path).read())
 
     return internal_sha1sum == available_driver_sha1sum
 

@@ -6,7 +6,7 @@ def sha1_file(path):
         with open(path, 'rb') as f:
             return sha1(f.read()).hexdigest()
     except FileNotFoundError:
-        return sha1().hexdigest()
+        return sha1(bytes("MISSING_FILE", "utf-8")).hexdigest()
 
 
 def sha1_data(data):
