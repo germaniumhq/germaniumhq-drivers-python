@@ -4,13 +4,10 @@ GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/..)
 
 set -e
 
+. $GERMANIUM_FOLDER/bin/driver_versions
+
 rm -fr $GERMANIUM_FOLDER/germaniumdrivers/binary
 mkdir $GERMANIUM_FOLDER/germaniumdrivers/binary
-
-CHROMEDRIVER_VERSION=2.22
-FIREFOXDRIVER_VERSION=0.9.0
-IEDRIVER_VERSION=2.53.1
-IEDRIVER_VERSION_MAJOR=2.53
 
 #
 # Chrome drivers
