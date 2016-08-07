@@ -43,7 +43,7 @@ mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/mac/32
 
 cd /tmp/germaniumdrivers
 wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-linux64.tar.gz
-wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-mac.tar.gz
+wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-macos.tar.gz
 wget https://github.com/mozilla/geckodriver/releases/download/v$FIREFOXDRIVER_VERSION/geckodriver-v$FIREFOXDRIVER_VERSION-win64.zip
 
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/linux/64
@@ -51,7 +51,7 @@ tar -zxvf /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-linux64.tar.
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/win/64
 unzip /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-win64.zip
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/firefox/mac/32
-tar -zxvf /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-mac.tar.gz
+tar -zxvf /tmp/germaniumdrivers/geckodriver-v$FIREFOXDRIVER_VERSION-macos.tar.gz
 
 #
 # IE Driver
