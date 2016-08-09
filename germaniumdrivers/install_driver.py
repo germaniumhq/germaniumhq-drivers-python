@@ -17,7 +17,13 @@ def install_driver(platform, browser):
     internal_driver_path = get_internal_driver_path(platform, browser)
     drivers_folder = get_germanium_drivers_folder()
 
-    os.makedirs(drivers_folder, exist_ok=True)
+    if os.path.exists(drivers_folder):
+        if not os.path.isdir(drivers_folder):
+            raise Exception("The drivers folder %s, exists already but is not a file. "
+                            "Please specify a different location using the "
+                            "GERMANIUM_DRIVERS_FOLDER environment variable." % drivers_folder)
+    else:
+        os.makedirs(drivers_folder)
 
     path_folders = os.environ['PATH'].split(os.pathsep)
     path_folders.insert(0, drivers_folder)
