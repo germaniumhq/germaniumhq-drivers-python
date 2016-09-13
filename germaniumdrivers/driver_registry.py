@@ -15,21 +15,21 @@ def get_driver_name(platform, browser):
         if browser == "chrome":
             return "chromedriver"
         elif browser == "firefox":
-            return "wires"
+            return "geckodriver"
         else:
             return None
     elif platform.operating_system == "mac":
         if browser == "chrome":
             return "chromedriver"
         elif browser == "firefox":
-            return "wires"
+            return "geckodriver"
         else:
             return None
     elif platform.operating_system == "win":
         if browser == "chrome":
             return "chromedriver.exe"
         elif browser == "firefox":
-            return "wires.exe"
+            return "geckodriver.exe"
         elif browser == "ie":
             return "IEDriverServer.exe"
         else:
@@ -48,7 +48,7 @@ def get_internal_driver_path(platform, browser):
             else:
                 raise unknown_browser(platform, browser)
         elif platform.operating_system == "mac":
-            return "binary/chrome/mac/32/chromedriver"
+            return "binary/chrome/mac/64/chromedriver"
         elif platform.operating_system == "win":
             return "binary/chrome/win/32/chromedriver.exe"
         else:
