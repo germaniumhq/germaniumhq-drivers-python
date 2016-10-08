@@ -35,6 +35,7 @@ def install_driver(platform, browser):
         return full_path_to_driver
 
     data = pkg_resources.resource_stream(__name__, internal_driver_path).read()
+    os.remove(full_path_to_driver)
     new_file = open(full_path_to_driver, 'wb')
     new_file.write(data)
     new_file.close()
