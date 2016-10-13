@@ -35,7 +35,12 @@ def install_driver(platform, browser):
         return full_path_to_driver
 
     data = pkg_resources.resource_stream(__name__, internal_driver_path).read()
-    os.remove(full_path_to_driver)
+
+    # if the driver already exists, we're going to try to remove it first, otherwise
+    # Java complains.
+    if os.path.exists(full_path_to_driver):
+        os.remove(full_path_to_driver)
+
     new_file = open(full_path_to_driver, 'wb')
     new_file.write(data)
     new_file.close()
