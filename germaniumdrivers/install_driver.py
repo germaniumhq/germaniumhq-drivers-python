@@ -2,7 +2,13 @@ import os
 import pkg_resources
 import stat
 
-from .driver_registry import get_driver_name, get_internal_driver_path, is_driver_up_to_date
+try:
+    import urllib.request as urllib2
+except ImportError:
+    import urllib2
+
+from . import driver_registry
+from .driver_registry import get_internal_driver_path, is_driver_up_to_date
 from .configurable_settings import get_germanium_drivers_folder
 
 
@@ -13,7 +19,12 @@ def install_driver(platform, browser):
     :param browser:
     :return:
     """
-    driver_name = get_driver_name(platform, browser)
+    driver_name = driver_registry.get_driver_name(platform, browser)
+
+    if not driver_name:
+        raise Exception("Unsupported Platform/Browser combination. '%s', "
+                        "browser: '%s'." % (platform, browser))
+
     drivers_folder = get_germanium_drivers_folder()
 
     if os.path.exists(drivers_folder):
@@ -30,11 +41,11 @@ def install_driver(platform, browser):
 
     full_path_to_driver = os.path.join(drivers_folder, driver_name)
 
-    if is_driver_up_to_date(platform, browser, full_path_to_driver):
+    if driver_registry.is_driver_up_to_date(platform, browser, full_path_to_driver):
         return full_path_to_driver
 
     internal_driver_path = get_internal_driver_path(platform, browser)
-    data = pkg_resources.resource_stream(__name__, internal_driver_path).read()
+    data = load_data(internal_driver_path)
 
     # if the driver already exists, we're going to try to remove it first, otherwise
     # Java complains.
@@ -50,3 +61,14 @@ def install_driver(platform, browser):
         os.chmod(full_path_to_driver, new_file_stat.st_mode | stat.S_IEXEC)
 
     return full_path_to_driver
+
+
+def load_data(path_or_url):
+    """ Loads the bytes for from the internal resource, or the given URL """
+    if path_or_url.startswith("http://") or path_or_url.startswith("https://"): #  url
+        data = urllib2.urlopen(path_or_url).read()
+    else:
+        data = pkg_resources.resource_stream(__name__, path_or_url).read()
+
+    return data
+

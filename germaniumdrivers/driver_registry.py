@@ -32,7 +32,7 @@ def get_driver_name(platform, browser):
             return "geckodriver.exe"
         elif browser == "ie":
             return "IEDriverServer.exe"
-        elif browser == "egde":
+        elif browser == "edge":
             return "MicrosoftWebDriver.exe"
         else:
             return None
