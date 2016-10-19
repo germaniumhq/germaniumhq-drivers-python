@@ -19,3 +19,8 @@ Feature: Tests if the browsers do open on the current platform
     And I go to google
     Then the title is "Google"
 
+  @4
+  Scenario: Open Edge using the downloaded driver
+    Given I open Edge
+    And I go to google
+    Then the title is "Google"

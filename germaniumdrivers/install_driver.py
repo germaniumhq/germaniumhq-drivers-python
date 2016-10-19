@@ -14,7 +14,6 @@ def install_driver(platform, browser):
     :return:
     """
     driver_name = get_driver_name(platform, browser)
-    internal_driver_path = get_internal_driver_path(platform, browser)
     drivers_folder = get_germanium_drivers_folder()
 
     if os.path.exists(drivers_folder):
@@ -34,6 +33,7 @@ def install_driver(platform, browser):
     if is_driver_up_to_date(platform, browser, full_path_to_driver):
         return full_path_to_driver
 
+    internal_driver_path = get_internal_driver_path(platform, browser)
     data = pkg_resources.resource_stream(__name__, internal_driver_path).read()
 
     # if the driver already exists, we're going to try to remove it first, otherwise

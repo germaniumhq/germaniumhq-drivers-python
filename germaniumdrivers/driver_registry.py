@@ -32,6 +32,8 @@ def get_driver_name(platform, browser):
             return "geckodriver.exe"
         elif browser == "ie":
             return "IEDriverServer.exe"
+        elif browser == "egde":
+            return "MicrosoftWebDriver.exe"
         else:
             return None
     else:
@@ -70,8 +72,18 @@ def get_internal_driver_path(platform, browser):
                 return "binary/ie/win/32/IEDriverServer.exe"
             elif platform.bits == "64":
                 return "binary/ie/win/64/IEDriverServer.exe"
+    elif browser == "edge":
+        return "https://download.microsoft.com/download/3/2/D/32D3E464-F2EF-490F-841B-05D53C848D15/MicrosoftWebDriver.exe"
 
     raise unknown_browser(platform, browser)
+
+
+def get_internal_driver_sha1(platform, browser):
+    if browser == "edge":
+        return "6f9e81e5f60fa3e8dccba15a3715ba20d44d0775"
+
+    internal_driver_path = get_internal_driver_path(platform, browser)
+    return sha1_data(pkg_resources.resource_stream(__name__, internal_driver_path).read())
 
 
 def is_driver_up_to_date(platform, browser, available_driver):
@@ -80,8 +92,7 @@ def is_driver_up_to_date(platform, browser, available_driver):
     else:
         available_driver_sha1sum = sha1_file(available_driver)
 
-    internal_driver_path = get_internal_driver_path(platform, browser)
-    internal_sha1sum = sha1_data(pkg_resources.resource_stream(__name__, internal_driver_path).read())
+    internal_sha1sum = get_internal_driver_sha1(platform, browser)
 
     return internal_sha1sum == available_driver_sha1sum
 

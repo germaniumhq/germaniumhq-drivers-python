@@ -32,6 +32,13 @@ def i_open_firefox(context):
     context.browser = webdriver.Chrome()
 
 
+@step("I open Edge")
+def i_open_firefox(context):
+    ensure_driver("edge")
+
+    context.browser = webdriver.Edge()
+
+
 @step(u'I go to google')
 def i_go_to_the_google_site(context):
     context.browser.get("http://google.com")
