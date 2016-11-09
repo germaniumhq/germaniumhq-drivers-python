@@ -64,3 +64,37 @@ else # not [[ "$IEDRIVER_VERSION" != "$IE_VERSION" ]]
     echo "OK"
 fi   # else [[ "$IEDRIVER_VERSION" != "$IE_VERSION" ]]
 
+#
+# Check the EDGE Version
+#
+echo -n "Checking Edge Driver $EDGEDRIVER_VERSION ... "
+
+EDGE_VERSION=$(wget -q -O - "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/" | html-beautify | grep "driver-download" | grep "WebDriver for release number" | head -n 1 | tr -s " " | cut -f 10 -d\  | cut -f1 -d\")
+
+if [[ "$EDGEDRIVER_VERSION" != "$EDGE_VERSION" ]]; then
+    echo "NOPE"
+    echo "Newer Edge Driver Version: $EDGE_VERSION"
+    echo "URL: $(wget -q -O - "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/" | html-beautify | grep "driver-download" | grep "WebDriver for release number" | head -n1 | perl -pe 's|^.* href="(.*?)".*?$|\1|g')"
+else # not [[ "$EDGEDRIVER_VERSION" != "$EDGE_VERSION" ]]
+    echo "OK"
+fi   # else [[ "$EDGEDRIVER_VERSION" != "$EDGE_VERSION" ]]
+
+
+#
+# Check the EDGE EULA URL if it changed
+#
+echo -n "Checking Edge EULA Driver Version: $EDGEDRIVER_EULA_VERSION ... "
+
+EDGE_EULA_VERSION=$(wget -q -O - "https://developer.microsoft.com/en-us/microsoft-edge/tools/webdriver/" | html-beautify | grep "License terms" | head -1 | perl -pe 's|^.* href="(.*?)".*?$|\1|g')
+
+if [[ "$EDGEDRIVER_EULA_VERSION" != "$EDGE_EULA_VERSION" ]]; then
+    echo "NOPE"
+    echo "New EULA Edge Driver Version: $EDGE_EULA_VERSION"
+else # not [[ "$EDGEDRIVER_EULA_VERSION" != "$EDGE_EULA_VERSION" ]]
+    echo "OK"
+fi   # else [[ "$EDGEDRIVER_EULA_VERSION" != "$EDGE_EULA_VERSION" ]]
+
+
+
+
+
