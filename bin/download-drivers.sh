@@ -72,3 +72,11 @@ unzip /tmp/germaniumdrivers/IEDriverServer_Win32_$IEDRIVER_VERSION.zip
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/ie/win/64
 unzip /tmp/germaniumdrivers/IEDriverServer_x64_$IEDRIVER_VERSION.zip
 
+#
+# Create __init__.py files for all the folders where the drivers are.
+#
+cd $GERMANIUM_FOLDER
+for f in $(find germaniumdrivers/binary -type f); do
+    touch $(dirname $f)/__init__.py
+done
+
