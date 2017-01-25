@@ -1,5 +1,5 @@
 germaniumdrivers:
-  version: 1.10.5
+  version: 2.0.0
   files:
     README.md: ^(germanium )(.*?)$
     README.rst: ^(germanium )(.*?)$
@@ -38,6 +38,6 @@ edgedriver:
 edgedriver_eula:
   version: https://az813057.vo.msecnd.net/eulas/webdriver-eula.pdf
   files:
-    bin/driver_versions: ^(EDGEDRIVER_EULA_VERSION=)(.*?)$
-    germaniumdrivers/install_driver.py: \"**VERSION** . If \"
+    bin/driver_versions: EDGEDRIVER_EULA_VERSION=**VERSION$$
+    germaniumdrivers/install_driver.py: '"**VERSION** . If "'
 
