@@ -1,42 +1,42 @@
 germaniumdrivers:
-  version: 2.0.0
+  version: parent:../germanium-build-system/@germaniumdrivers
   files:
     README.md: ^(germanium )(.*?)$
     README.rst: ^(germanium )(.*?)$
     setup.py: version='**VERSION**',
 
 firefox:
-  version: 50.1.0
+  version: parent:../germanium-build-system/@firefox
   files:
     bin/driver_versions: ^(FIREFOX_VERSION=)(.*?)$
 
 firefox_driver:
-  version: 0.11.1
+  version: parent:../germanium-build-system/@firefox_driver
   files:
     bin/driver_versions: ^(FIREFOXDRIVER_VERSION=)(.*?)$
 
 chromedriver:
-  version: '2.27'
+  version: parent:../germanium-build-system/@chromedriver
   files:
     bin/driver_versions: ^(CHROMEDRIVER_VERSION=)(.*?)$
 
 iedriver:
-  version: 2.53.1
+  version: parent:../germanium-build-system/@iedriver
   files:
     bin/driver_versions: ^(IEDRIVER_VERSION=)(.*?)$
 
 iedriver_major:
-  version: '2.53' # js:/^(\d+\.\d+).\d+$/.exec(v.iedriver)[1]
+  version: parent:../germanium-build-system/@iedriver_major
   files:
     bin/driver_versions: ^(IEDRIVER_VERSION_MAJOR=)(.*?)$
 
 edgedriver:
-  version: '14393'
+  version: parent:../germanium-build-system/@edgedriver
   files:
     bin/driver_versions: ^(EDGEDRIVER_VERSION=)(.*?)$
 
 edgedriver_eula:
-  version: https://az813057.vo.msecnd.net/eulas/webdriver-eula.pdf
+  version: parent:../germanium-build-system/@edgedriver_eula
   files:
     bin/driver_versions: EDGEDRIVER_EULA_VERSION=**VERSION$$
     germaniumdrivers/install_driver.py: '"**VERSION** . If "'
