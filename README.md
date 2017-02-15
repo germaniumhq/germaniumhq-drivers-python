@@ -1,4 +1,4 @@
-germanium 2.0.0
+germanium 2.0.1
 ================
 
 _This is the optional drivers package._
