@@ -11,7 +11,7 @@ mkdir $GERMANIUM_FOLDER/germaniumdrivers/binary
 
 # curl -O is set to download the file, instead of displaying it on the screen.
 #      -L is set to follow redirects, like wget would do.
-WGET="curl -O -L"
+WGET="curl -O -L -k"
 
 #
 # Chrome drivers
