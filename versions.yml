@@ -1,3 +1,8 @@
+selenium:
+  version: parent:../germanium-build-system/@selenium
+  files:
+    requirements.txt: selenium==**VERSION$$
+
 germaniumdrivers:
   version: parent:../germanium-build-system/@germaniumdrivers
   files:
