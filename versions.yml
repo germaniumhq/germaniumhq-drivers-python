@@ -46,3 +46,7 @@ edgedriver_eula:
     bin/driver_versions: EDGEDRIVER_EULA_VERSION=**VERSION$$
     germaniumdrivers/install_driver.py: '"**VERSION** . If "'
 
+edgedriver_url:
+  version: parent:../germanium-build-system/@edgedriver_url
+  files:
+    germaniumdrivers/driver_registry.py: 'return "**VERSION**"  #EDGE'

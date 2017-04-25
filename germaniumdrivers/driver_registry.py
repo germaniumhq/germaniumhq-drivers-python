@@ -73,7 +73,7 @@ def get_internal_driver_path(platform, browser):
             elif platform.bits == "64":
                 return "binary/ie/win/64/IEDriverServer.exe"
     elif browser == "edge":
-        return "https://download.microsoft.com/download/3/2/D/32D3E464-F2EF-490F-841B-05D53C848D15/MicrosoftWebDriver.exe"
+        return "https://download.microsoft.com/download/3/4/2/342316D7-EBE0-4F10-ABA2-AE8E0CDF36DD/MicrosoftWebDriver.exe"  #EDGE
 
     raise unknown_browser(platform, browser)
 
