@@ -4,27 +4,21 @@ pipeline {
     stage('Build Germanium Drivers') {
       steps {
         node(label: 'master') {
-          ws(dir: 'build-dir') {
-            cleanWs()
-            script {
-              sh """
-              pwd
-              ls -la
-              git clone $DRIVERS_SOURCES_URL
-              """
-            }
-            
-            script {
-              dockerBuild(file: './jenkins/drivers/Dockerfile.py3.build',
-              build_args: [
-                "http_proxy=http://${LOCAL_PROXY}",
-                "https_proxy=http://${LOCAL_PROXY}",
-                "ftp_proxy=http://${LOCAL_PROXY}"
-              ],
-              tags: ['germanium_drivers_test']
-            )
+          script {
+            sh """
+            git clone $DRIVERS_SOURCES_URL
+            """
           }
           
+          script {
+            dockerBuild(file: './jenkins/drivers/Dockerfile.py3.build',
+            build_args: [
+              "http_proxy=http://${LOCAL_PROXY}",
+              "https_proxy=http://${LOCAL_PROXY}",
+              "ftp_proxy=http://${LOCAL_PROXY}"
+            ],
+            tags: ['germanium_drivers_test']
+          )
         }
         
       }
