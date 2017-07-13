@@ -5,7 +5,7 @@ pipeline {
       steps {
         node(label: 'master') {
           script {
-            sh "git checkout $DRIVERS_SOURCES_URL"
+            sh "git clone $DRIVERS_SOURCES_URL"
           }
           
           script {
