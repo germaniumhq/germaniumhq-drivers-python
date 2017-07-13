@@ -4,7 +4,10 @@ pipeline {
     stage('Build Germanium Drivers') {
       steps {
         node(label: 'master') {
-          git '$DRIVERS_SOURCES_URL'
+          script {
+            sh "git checkout $DRIVERS_SOURCE_URL"
+          }
+          
           script {
             dockerBuild(file: './jenkins/drivers/Dockerfile.py3.build',
             build_args: [
