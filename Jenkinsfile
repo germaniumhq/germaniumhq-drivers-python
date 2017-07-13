@@ -3,7 +3,7 @@ pipeline {
   stages {
     stage('Build Germanium Drivers') {
       steps {
-        node(label: 'docker-build') {
+        node(label: 'master') {
           git '$DRIVERS_SOURCES_URL'
           script {
             dockerBuild(file: './jenkins/drivers/Dockerfile.py3.build',
@@ -26,7 +26,7 @@ pipeline {
         def name = 'ge-drivers-' + getGuid()
       }
       
-      node(label: 'build-drivers') {
+      node(label: 'master') {
         script {
           dockerRun image: 'germanium_drivers_test',
           env: [
@@ -51,7 +51,7 @@ pipeline {
   }
   stage('Commit Image') {
     steps {
-      node(label: 'docker-commit') {
+      node(label: 'master') {
         script {
           sh """
           docker commit ${name} ${name}
@@ -65,7 +65,7 @@ pipeline {
   stage('Install into local Nexus') {
     steps {
       input 'Install into local Nexus?'
-      node(label: 'deploy-on-local-nexus') {
+      node(label: 'master') {
         script {
           dockerRun image: name,
           links: [
