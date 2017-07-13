@@ -13,7 +13,7 @@ properties([
 stage("Build Germanium Drivers") {
     node {
         checkout scm
-        dockerBuild(file: './jenkins/drivers/Dockerfile.py3.build',
+        dockerBuild(file: './jenkins/Dockerfile.py3.build',
             build_args: [
                 "http_proxy=http://${LOCAL_PROXY}",
                 "https_proxy=http://${LOCAL_PROXY}",
