@@ -84,7 +84,7 @@ pipeline {
   }
 }
 parameters {
-  string('LOCAL_PROXY', '172.17.0.1:3128', 'Proxy that will be used for downloading resources, so the build doesn\'t take eternities.')
-  string('DRIVERS_SOURCES_URL', 'ssh://git@192.168.0.2:10022/germanium/germanium-drivers.git', 'germanium-drivers GIT sources')
+  string(name: 'LOCAL_PROXY', defaultValue: '172.17.0.1:3128', description: 'Proxy that will be used for downloading resources, so the build doesn\'t take eternities.')
+  string(name: 'DRIVERS_SOURCES_URL', defaultValue: 'ssh://git@192.168.0.2:10022/germanium/germanium-drivers.git', description: 'germanium-drivers GIT sources')
 }
 }
