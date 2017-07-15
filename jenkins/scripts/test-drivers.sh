@@ -19,9 +19,9 @@ function deactivate_proxy() {
 }
 
 function activate_proxy() {
-    http_proxy="$old_http_proxy"
-    https_proxy="$old_https_proxy"
-    ftp_proxy="$old_ftp_proxy"
+    export http_proxy="$old_http_proxy"
+    export https_proxy="$old_https_proxy"
+    export ftp_proxy="$old_ftp_proxy"
 }
 
 deactivate_proxy
@@ -35,6 +35,8 @@ cd /tmp/project
 # Get the dependencies, and binary drivers.
 #############################################################################
 activate_proxy
+
+set
 
 pip install -r requirements.txt
 bin/download-drivers.sh
