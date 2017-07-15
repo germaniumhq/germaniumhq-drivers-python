@@ -1,3 +1,5 @@
+# The germaniumhq ubuntu container is just a container that
+# has a certificate for the squid proxy
 FROM germaniumhq/ubuntu:16.04
 MAINTAINER Bogdan Mustiata <bogdan.mustiata@gmail.com>
 
