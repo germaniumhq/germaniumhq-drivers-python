@@ -5,7 +5,24 @@ RUN apt update -y && \
     apt install -y python2.7 python-pip python-virtualenv && \
     useradd ciplogic -m
 
+#======================================
+# install chrome
+#======================================
+RUN cd /tmp && \
+    wget --no-proxy https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb && \
+    dpkg -i google-chrome-stable_current_amd64.deb || apt-get -y -f install
+
+#======================================
+# install firefox
+#======================================
+RUN apt install -y firefox
+
+COPY scripts /scripts
+RUN chmod +x /scripts/*.sh
+
 USER ciplogic
 
-RUN virtualenv /home/ciplogic/python
+RUN virtualenv /home/ciplogic/python && \
+    /home/ciplogic/python/bin/pip install wheel && \
+    /home/ciplogic/python/bin/pip install behave
 
