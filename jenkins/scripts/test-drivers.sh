@@ -36,6 +36,8 @@ cd /tmp/project
 #############################################################################
 activate_proxy
 
+set
+
 pip install -r requirements.txt
 bin/download-drivers.sh
 
@@ -45,5 +47,4 @@ deactivate_proxy
 # Run the actual tests on the binary drivers
 #############################################################################
 behave -t @chrome,@firefox
-
 
