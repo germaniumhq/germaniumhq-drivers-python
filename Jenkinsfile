@@ -11,16 +11,30 @@ properties([
 ])
 
 stage("Build Germanium Drivers") {
-    node {
-        checkout scm
-        dockerBuild(file: './jenkins/Dockerfile.py3.build',
-            build_args: [
-                "http_proxy=http://${LOCAL_PROXY}",
-                "https_proxy=http://${LOCAL_PROXY}",
-                "ftp_proxy=http://${LOCAL_PROXY}"
-            ],
-            tags: ['germanium_drivers_test']
-        )
+    parallel 'Python 3.5': {
+        node {
+            checkout scm
+            dockerBuild(file: './jenkins/Dockerfile.py3.build',
+                build_args: [
+                    "http_proxy=http://${LOCAL_PROXY}",
+                    "https_proxy=http://${LOCAL_PROXY}",
+                    "ftp_proxy=http://${LOCAL_PROXY}"
+                ],
+                tags: ['germanium_drivers_py3']
+            )
+        }
+    }, 'Python 2.7': {
+        node {
+            checkout scm
+            dockerBuild(file: './jenkins/Dockerfile.py2.build',
+                build_args: [
+                    "http_proxy=http://${LOCAL_PROXY}",
+                    "https_proxy=http://${LOCAL_PROXY}",
+                    "ftp_proxy=http://${LOCAL_PROXY}"
+                ],
+                tags: ['germanium_drivers_py2']
+            )
+        }
     }
 }
 
@@ -30,22 +44,43 @@ def name = 'ge-drivers-' + getGuid()
 print "Building container with name: ${name}"
 
 stage("Build and Test germanium-drivers") {
-    node {
-        dockerRun image: 'germanium_drivers_test',
-            env: [
-                "DISPLAY=vnc:0",
-                "http_proxy=http://${LOCAL_PROXY}",
-                "https_proxy=http://${LOCAL_PROXY}",
-                "ftp_proxy=http://${LOCAL_PROXY}",
-                "SOURCES_URL=${DRIVERS_SOURCES_URL}",
-            ],
-            links: [
-                "nexus:nexus",
-                "vnc-server:vnc"
-            ],
-            name: name,
-            privileged: true,
-            command: "/scripts/test-drivers.sh"
+    parallel 'Python 3.5 Tests': {
+        node {
+            dockerRun image: 'germanium_drivers_py3',
+                env: [
+                    "DISPLAY=vnc:0",
+                    "http_proxy=http://${LOCAL_PROXY}",
+                    "https_proxy=http://${LOCAL_PROXY}",
+                    "ftp_proxy=http://${LOCAL_PROXY}",
+                    "SOURCES_URL=${DRIVERS_SOURCES_URL}",
+                ],
+                links: [
+                    "nexus:nexus",
+                    "vnc-server:vnc"
+                ],
+                name: name,
+                privileged: true,
+                command: "/scripts/test-drivers.sh"
+        }
+    }, 'Python 2.7 Tests': {
+        node {
+            dockerRun image: 'germanium_drivers_py2',
+                env: [
+                    "DISPLAY=vnc:0",
+                    "http_proxy=http://${LOCAL_PROXY}",
+                    "https_proxy=http://${LOCAL_PROXY}",
+                    "ftp_proxy=http://${LOCAL_PROXY}",
+                    "SOURCES_URL=${DRIVERS_SOURCES_URL}",
+                ],
+                links: [
+                    "nexus:nexus",
+                    "vnc-server:vnc"
+                ],
+                remove: true, // this is just used for testing
+                privileged: true,
+                command: "/scripts/test-drivers.sh"
+        }
+
     }
 }
 
