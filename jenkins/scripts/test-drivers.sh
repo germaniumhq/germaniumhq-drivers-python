@@ -10,18 +10,18 @@ set -e
 # Utility functions.
 #############################################################################
 function deactivate_proxy() {
-    set old_http_proxy="$http_proxy"
-    set old_https_proxy="$https_proxy"
-    set old_ftp_proxy="$ftp_proxy"
+    old_http_proxy="$http_proxy"
+    old_https_proxy="$https_proxy"
+    old_ftp_proxy="$ftp_proxy"
     unset http_proxy
     unset https_proxy
     unset ftp_proxy
 }
 
 function activate_proxy() {
-    set http_proxy="$old_http_proxy"
-    set https_proxy="$old_https_proxy"
-    set ftp_proxy="$old_ftp_proxy"
+    http_proxy="$old_http_proxy"
+    https_proxy="$old_https_proxy"
+    ftp_proxy="$old_ftp_proxy"
 }
 
 deactivate_proxy
@@ -35,8 +35,6 @@ cd /tmp/project
 # Get the dependencies, and binary drivers.
 #############################################################################
 activate_proxy
-
-set
 
 pip install -r requirements.txt
 bin/download-drivers.sh
