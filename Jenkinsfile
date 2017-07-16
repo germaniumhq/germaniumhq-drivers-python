@@ -18,6 +18,8 @@ stage("Build Germanium Drivers") {
             withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
                                   variable: 'PYPIRC_RELEASE_FILE')]) {
                 sh """
+                    pwd
+                    ls -la
                     cp ${env.PYPIRC_RELEASE_FILE} ./jenkins/scripts/_pypirc_release
                 """
             }
