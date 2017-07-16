@@ -19,6 +19,7 @@ stage("Build Germanium Drivers") {
                                   variable: 'PYPIRC_RELEASE_FILE')]) {
                 sh """
                     cp ${env.PYPIRC_RELEASE_FILE} ./jenkins/scripts/_pypirc_release
+                    chmod 666 ./jenkins/scripts/_pypirc_release
                 """
             }
 
