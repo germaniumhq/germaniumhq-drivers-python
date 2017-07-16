@@ -15,9 +15,12 @@ stage("Build Germanium Drivers") {
         node {
             checkout scm
 
-            sh """
-                cp $PYPIRC_RELEASE_FILE ./jenkins/scripts/_pypirc_release
-            """
+            withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
+                                  variable: 'PYPIRC_RELEASE_FILE')]) {
+                sh """
+                    cp ${env.PYPIRC_RELEASE_FILE} ./jenkins/scripts/_pypirc_release
+                """
+            }
 
             dockerBuild(file: './jenkins/Dockerfile.py3.build',
                 build_args: [
