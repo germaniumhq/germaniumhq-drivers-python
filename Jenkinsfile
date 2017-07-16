@@ -14,6 +14,11 @@ stage("Build Germanium Drivers") {
     parallel 'Python 3.5': {
         node {
             checkout scm
+
+            sh """
+                cp $PYPIRC_RELEASE_FILE ./jenkins/scripts/_pypirc_release
+            """
+
             dockerBuild(file: './jenkins/Dockerfile.py3.build',
                 build_args: [
                     "http_proxy=http://${LOCAL_PROXY}",
@@ -105,10 +110,13 @@ stage("Install into local Nexus") {
     }
 }
 
-/*
 stage("Install into global PyPI") {
-    dockerRun image: name,
-        remove: true,
-        command: "bin/release.sh"
+    input message: 'Install into global PyPI?'
+
+    node {
+        dockerRun image: name,
+            remove: true,
+            command: "bin/release.sh"
+    }
 }
-*/
+

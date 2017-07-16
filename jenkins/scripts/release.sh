@@ -31,8 +31,11 @@ deactivate_proxy
 #############################################################################
 
 # make sure we know about the nexus package index
-cp /scripts/_pypirc_nexus ~/.pypirc
+cp /scripts/_pypirc_release ~/.pypirc
 
 # publish
 cd /tmp/project
-python setup.py sdist upload -r nexus
+
+python setup.py sdist upload -r pypitest
+python setup.py sdist upload -r pypi
+
