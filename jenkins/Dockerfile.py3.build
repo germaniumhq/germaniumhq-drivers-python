@@ -25,7 +25,8 @@ RUN chmod +x /scripts/*.sh
 USER ciplogic
 
 RUN python3 -m venv /home/ciplogic/python && \
-    /home/ciplogic/python/bin/pip install wheel && \
+    /home/ciplogic/python/bin/pip install -U pip && \
+    /home/ciplogic/python/bin/pip install -U wheel && \
     /home/ciplogic/python/bin/pip install behave
 
 
