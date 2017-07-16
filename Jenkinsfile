@@ -13,6 +13,8 @@ properties([
 stage("Build Germanium Drivers") {
     parallel 'Python 3.5': {
         node {
+            deleteDir()
+
             checkout scm
 
             withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
@@ -34,6 +36,8 @@ stage("Build Germanium Drivers") {
         }
     }, 'Python 2.7': {
         node {
+            deleteDir()
+
             checkout scm
             dockerBuild(file: './jenkins/Dockerfile.py2.build',
                 build_args: [
