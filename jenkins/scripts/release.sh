@@ -31,7 +31,7 @@ deactivate_proxy
 #############################################################################
 
 # make sure we know about the nexus package index
-cp /scripts/_pypirc_release ~/.pypirc
+cp /scripts/_pypirc_release /home/ciplogic/.pypirc
 
 # publish
 cd /tmp/project
