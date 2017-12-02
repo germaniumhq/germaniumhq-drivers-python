@@ -1,6 +1,8 @@
 FROM germaniumhq/ubuntu:16.04
 MAINTAINER Bogdan Mustiata <bogdan.mustiata@gmail.com>
 
+ENV REFRESHED_AT=2017.12.02-22:37:33
+
 RUN apt update -y && \
     apt install -y python2.7 python-pip python-virtualenv unzip git && \
     useradd ciplogic -m
