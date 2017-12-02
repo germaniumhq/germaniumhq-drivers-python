@@ -26,7 +26,7 @@ fi   # else [[ "CHROME_VERSION" != "$CHROMEDRIVER_VERSION" ]]
 #
 echo -n "Checking Firefox version $FIREFOX_VERSION ... "
 
-REMOTE_FIREFOX_VERSION=$(wget -q -O - https://www.mozilla.org/en-US/firefox/all/ | grep "download win64" -A 2 | grep "Download for Windows 64-bit in English (US)" | perl -pe 's|.*\?product=firefox-(.*?)-SSL.*|$1|')
+REMOTE_FIREFOX_VERSION=$(wget -q -O - https://www.mozilla.org/en-US/firefox/notes/ | grep '<div class="version">' -A 1 | grep '<h2>' | cut -f2 -d '>' | cut -f1 -d '<')
 
 if [[ "$REMOTE_FIREFOX_VERSION" != "$FIREFOX_VERSION" ]]; then
     echo "NOPE"
