@@ -5,7 +5,7 @@ properties([
                defaultValue: '172.17.0.1:3128',
                description: 'Squid proxy to use for fetching resources'),
         string(name: 'DRIVERS_SOURCES_URL',
-               defaultValue: 'http://192.168.0.2:10080/germanium/germanium-drivers.git',
+               defaultValue: 'http://git-server:3000/germanium/germanium-drivers.git',
                description: 'Location for the drivers sources.')
     ])
 ])
