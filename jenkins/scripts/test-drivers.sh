@@ -56,5 +56,5 @@ if [[ "$RUN_FIREFOX_TESTS" == "true" ]]; then
     TAGS="$TAGS,firefox"
 fi # [[ "$RUN_FIREFOX_TESTS" == "true" ]]
 
-behave -t @chrome,@firefox
+behave -t $TAGS
 
