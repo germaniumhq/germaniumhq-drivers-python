@@ -6,9 +6,16 @@ properties([
                description: 'Squid proxy to use for fetching resources'),
         string(name: 'DRIVERS_SOURCES_URL',
                defaultValue: 'http://git-server:3000/germanium/germanium-drivers.git',
-               description: 'Location for the drivers sources.')
+               description: 'Location for the drivers sources.'),
+        booleanParam(name: 'RUN_FIREFOX_TESTS', defaultValue: true,
+                description: 'Should the firefox tests run'),
+        booleanParam(name: 'RUN_CHROME_TESTS', defaultValue: true,
+                description: 'Should the chrome tests run')
     ])
 ])
+
+RUN_FIREFOX_TESTS = Boolean.valueOf(RUN_FIREFOX_TESTS)
+RUN_CHROME_TESTS = Boolean.valueOf(RUN_CHROME_TESTS)
 
 stage("Build Germanium Drivers") {
     parallel 'Python 3.5': {
@@ -66,6 +73,8 @@ stage("Build and Test germanium-drivers") {
                     "https_proxy=http://${LOCAL_PROXY}",
                     "ftp_proxy=http://${LOCAL_PROXY}",
                     "SOURCES_URL=${DRIVERS_SOURCES_URL}",
+                    "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
+                    "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
                 ],
                 links: [
                     "nexus:nexus",
@@ -85,6 +94,8 @@ stage("Build and Test germanium-drivers") {
                     "https_proxy=http://${LOCAL_PROXY}",
                     "ftp_proxy=http://${LOCAL_PROXY}",
                     "SOURCES_URL=${DRIVERS_SOURCES_URL}",
+                    "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
+                    "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
                 ],
                 links: [
                     "nexus:nexus",
