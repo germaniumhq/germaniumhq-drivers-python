@@ -69,7 +69,8 @@ stage("Build and Test germanium-drivers") {
                 ],
                 links: [
                     "nexus:nexus",
-                    "vnc-server:vnc"
+                    "vnc-server:vnc",
+                    "git-server"
                 ],
                 name: name,
                 privileged: true,
@@ -87,7 +88,8 @@ stage("Build and Test germanium-drivers") {
                 ],
                 links: [
                     "nexus:nexus",
-                    "vnc-server:vnc"
+                    "vnc-server:vnc",
+                    "git-server"
                 ],
                 remove: true, // this is just used for testing
                 privileged: true,
