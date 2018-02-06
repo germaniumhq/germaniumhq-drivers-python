@@ -1,8 +1,6 @@
 # The germaniumhq ubuntu container is just a container that
 # has a certificate for the squid proxy
-FROM germaniumhq/ubuntu:16.04
-MAINTAINER Bogdan Mustiata <bogdan.mustiata@gmail.com>
-
+FROM ubuntu:16.04
 ENV REFRESHED_AT=2017.12.02-22:37:13
 
 RUN apt update -y && \

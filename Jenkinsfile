@@ -1,12 +1,8 @@
 
 properties([
     parameters([
-        string(name: 'LOCAL_PROXY',
-               defaultValue: '172.17.0.1:3128',
-               description: 'Squid proxy to use for fetching resources'),
-        string(name: 'DRIVERS_SOURCES_URL',
-               defaultValue: 'http://git-server:3000/germanium/germanium-drivers.git',
-               description: 'Location for the drivers sources.'),
+        string(name: 'IMAGE_NAME', defaultValue: '',
+                description: 'Container image name. By default it is ge-drivers-<uid>'),
         booleanParam(name: 'RUN_FIREFOX_TESTS', defaultValue: true,
                 description: 'Should the firefox tests run'),
         booleanParam(name: 'RUN_CHROME_TESTS', defaultValue: true,
@@ -21,7 +17,6 @@ stage("Build Germanium Drivers") {
     parallel 'Python 3.5': {
         node {
             deleteDir()
-
             checkout scm
 
             withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
@@ -33,35 +28,32 @@ stage("Build Germanium Drivers") {
             }
 
             dockerBuild(file: './jenkins/Dockerfile.py3.build',
-                build_args: [
-                    "http_proxy=http://${LOCAL_PROXY}",
-                    "https_proxy=http://${LOCAL_PROXY}",
-                    "ftp_proxy=http://${LOCAL_PROXY}"
-                ],
                 tags: ['germanium_drivers_py3']
             )
         }
     }, 'Python 2.7': {
         node {
             deleteDir()
-
             checkout scm
+
             dockerBuild(file: './jenkins/Dockerfile.py2.build',
-                build_args: [
-                    "http_proxy=http://${LOCAL_PROXY}",
-                    "https_proxy=http://${LOCAL_PROXY}",
-                    "ftp_proxy=http://${LOCAL_PROXY}"
-                ],
                 tags: ['germanium_drivers_py2']
             )
         }
     }
 }
 
-def name = 'ge-drivers-' + getGuid()
-//def name = 'ge-drivers-b64f4dbe-830d-4a2d-88ba-44b478b86cf0'
+// -------------------------------------------------------------------
+// container name definition
+// -------------------------------------------------------------------
+def name
+if (IMAGE_NAME) {
+    name = 'ge-drivers-' + IMAGE_NAME
+} else {
+    name = 'ge-drivers-' + getGuid()
+}
 
-print "Building container with name: ${name}"
+println "Building container with name: ${name}"
 
 stage("Build and Test germanium-drivers") {
     parallel 'Python 3.5 Tests': {
@@ -69,17 +61,12 @@ stage("Build and Test germanium-drivers") {
             dockerRun image: 'germanium_drivers_py3',
                 env: [
                     "DISPLAY=vnc:0",
-                    "http_proxy=http://${LOCAL_PROXY}",
-                    "https_proxy=http://${LOCAL_PROXY}",
-                    "ftp_proxy=http://${LOCAL_PROXY}",
-                    "SOURCES_URL=${DRIVERS_SOURCES_URL}",
                     "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
                     "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
                 ],
                 links: [
                     "nexus:nexus",
-                    "vnc-server:vnc",
-                    "git-server"
+                    "vnc-server:vnc"
                 ],
                 name: name,
                 privileged: true,
@@ -90,17 +77,12 @@ stage("Build and Test germanium-drivers") {
             dockerRun image: 'germanium_drivers_py2',
                 env: [
                     "DISPLAY=vnc:0",
-                    "http_proxy=http://${LOCAL_PROXY}",
-                    "https_proxy=http://${LOCAL_PROXY}",
-                    "ftp_proxy=http://${LOCAL_PROXY}",
-                    "SOURCES_URL=${DRIVERS_SOURCES_URL}",
                     "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
                     "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
                 ],
                 links: [
                     "nexus:nexus",
-                    "vnc-server:vnc",
-                    "git-server"
+                    "vnc-server:vnc"
                 ],
                 remove: true, // this is just used for testing
                 privileged: true,
