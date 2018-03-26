@@ -27,7 +27,7 @@ stage("Build Germanium Drivers") {
                 """
             }
 
-            dockerBuild(file: './jenkins/Dockerfile.py3.build',
+            dockerBuild(file: './Dockerfile.py3.build',
                 tags: ['germanium_drivers_py3']
             )
         }

@@ -1,0 +1,8 @@
+build
+dist
+germaniumdrivers/binary
+*.pyc
+__pycache__
+node_modules
+.idea
+.jenny

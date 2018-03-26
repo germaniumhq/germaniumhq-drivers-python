@@ -14,14 +14,10 @@ cd /tmp/project
 #############################################################################
 # Get the dependencies, and binary drivers.
 #############################################################################
-activate_proxy
-
 set
 
 pip install -r requirements.txt
 bin/download-drivers.sh
-
-deactivate_proxy
 
 #############################################################################
 # Run the actual tests on the binary drivers
