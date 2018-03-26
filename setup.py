@@ -16,7 +16,6 @@ setup(
     install_requires=[],
     packages=[
         'germaniumdrivers',
-        'germaniumdrivers.binary.chrome.linux.32',
         'germaniumdrivers.binary.chrome.linux.64',
         'germaniumdrivers.binary.chrome.mac.64',
         'germaniumdrivers.binary.chrome.win.32',
@@ -27,7 +26,6 @@ setup(
         'germaniumdrivers.binary.ie.win.64',
     ],
     package_data={
-        'germaniumdrivers.binary.chrome.linux.32' : ['chromedriver'],
         'germaniumdrivers.binary.chrome.linux.64' : ['chromedriver'],
         'germaniumdrivers.binary.chrome.mac.64' : ['chromedriver'],
         'germaniumdrivers.binary.chrome.win.32' : ['chromedriver.exe'],

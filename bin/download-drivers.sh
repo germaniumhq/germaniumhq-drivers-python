@@ -17,22 +17,18 @@ WGET="curl -O -L -k"
 # Chrome drivers
 #
 mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/linux/64
-mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/linux/32
 mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/win/32
 mkdir -p $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/mac/64
 
 rm -fr /tmp/germaniumdrivers
 mkdir -p /tmp/germaniumdrivers
 cd /tmp/germaniumdrivers
-$WGET http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux32.zip
 $WGET http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
 $WGET http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_win32.zip
 $WGET http://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_mac64.zip
 
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/linux/64
 unzip /tmp/germaniumdrivers/chromedriver_linux64.zip
-cd $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/linux/32
-unzip /tmp/germaniumdrivers/chromedriver_linux32.zip
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/win/32
 unzip /tmp/germaniumdrivers/chromedriver_win32.zip
 cd $GERMANIUM_FOLDER/germaniumdrivers/binary/chrome/mac/64

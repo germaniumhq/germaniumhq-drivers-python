@@ -43,9 +43,7 @@ def get_driver_name(platform, browser):
 def get_internal_driver_path(platform, browser):
     if browser == "chrome":
         if platform.operating_system == "linux":
-            if platform.bits == "32":
-                return "binary/chrome/linux/32/chromedriver"
-            elif platform.bits == "64":
+            if platform.bits == "64":
                 return "binary/chrome/linux/64/chromedriver"
             else:
                 raise unknown_browser(platform, browser)
