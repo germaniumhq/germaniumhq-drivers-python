@@ -70,6 +70,7 @@ stage("Test germanium-drivers") {
                     try {
                         sh """
                             cd /src
+                            . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
                         """
                     } finally {
@@ -93,6 +94,7 @@ stage("Test germanium-drivers") {
                     try {
                         sh """
                             cd /src
+                            . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
                         """
                     } finally {
