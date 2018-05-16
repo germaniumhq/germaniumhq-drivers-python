@@ -14,7 +14,7 @@ RUN_FIREFOX_TESTS = Boolean.valueOf(RUN_FIREFOX_TESTS)
 RUN_CHROME_TESTS = Boolean.valueOf(RUN_CHROME_TESTS)
 
 stage("Build Germanium Drivers") {
-    parallel 'Python 3.5': {
+    parallel 'Python 3.6': {
         node {
             deleteDir()
             checkout scm
@@ -54,7 +54,7 @@ if (IMAGE_NAME) {
 println "Building container with name: ${name}"
 
 stage("Test germanium-drivers") {
-    parallel 'Python 3.5 Tests': {
+    parallel 'Python 3.6 Tests': {
         node {
             dockerRm containers: [name]
             dockerInside image: 'germanium_drivers_py3',
