@@ -27,18 +27,16 @@ stage("Build Germanium Drivers") {
                 """
             }
 
-            dockerBuild(file: './Dockerfile.py3.build',
-                tags: ['germanium_drivers_py3']
-            )
+            docker.build('germanium_drivers_py3',
+                         '-f Dockerfile .')
         }
     }, 'Python 2.7': {
         node {
             deleteDir()
             checkout scm
 
-            dockerBuild(file: './jenkins/Dockerfile.py2.build',
-                tags: ['germanium_drivers_py2']
-            )
+            docker.build('germanium_drivers_py2',
+                         '-f Dockerfile.py2 .')
         }
     }
 }
@@ -55,38 +53,52 @@ if (IMAGE_NAME) {
 
 println "Building container with name: ${name}"
 
-stage("Build and Test germanium-drivers") {
+stage("Test germanium-drivers") {
     parallel 'Python 3.5 Tests': {
         node {
-            dockerRun image: 'germanium_drivers_py3',
+            dockerRm containers: [name]
+            dockerInside image: 'germanium_drivers_py3',
                 env: [
-                    "DISPLAY=vnc:0",
-                    "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
-                    "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
+                    "DISPLAY=vnc:0"
                 ],
                 links: [
-                    "nexus:nexus",
                     "vnc-server:vnc"
                 ],
                 name: name,
                 privileged: true,
-                command: "/scripts/test-drivers.sh"
+                code: {
+                    try {
+                        sh """
+                            cd /src
+                            behave --junit --no-color -t ~@ie -t ~@edge
+                        """
+                    } finally {
+                        junit "/src/reports/*.xml"
+                    }
+                }
         }
     }, 'Python 2.7 Tests': {
         node {
-            dockerRun image: 'germanium_drivers_py2',
+            dockerRm containers: ["${name}2"]
+            dockerInside image: 'germanium_drivers_py2',
                 env: [
-                    "DISPLAY=vnc:0",
-                    "RUN_CHROME_TESTS=${RUN_CHROME_TESTS}",
-                    "RUN_FIREFOX_TESTS=${RUN_FIREFOX_TESTS}",
+                    "DISPLAY=vnc:0"
                 ],
                 links: [
-                    "nexus:nexus",
                     "vnc-server:vnc"
                 ],
-                remove: true, // this is just used for testing
+                name: "${name}2",
                 privileged: true,
-                command: "/scripts/test-drivers.sh"
+                code: {
+                    try {
+                        sh """
+                            cd /src
+                            behave --junit --no-color -t ~@ie -t ~@edge
+                        """
+                    } finally {
+                        junit "/src/reports/*.xml"
+                    }
+                }
         }
 
     }
@@ -118,6 +130,7 @@ stage("Install into global PyPI") {
 
     node {
         dockerRun image: name,
+
             remove: true,
             command: "/scripts/release.sh"
     }

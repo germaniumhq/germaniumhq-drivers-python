@@ -16,40 +16,41 @@ germaniumdrivers:
 firefox:
   version: parent:../germanium-build-system/@firefox
   files:
-    bin/driver_versions: ^(FIREFOX_VERSION=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(FIREFOX_VERSION=)(.*?)$
 
 firefox_driver:
   version: parent:../germanium-build-system/@firefox_driver
   files:
-    bin/driver_versions: ^(FIREFOXDRIVER_VERSION=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(FIREFOXDRIVER_VERSION=)(.*?)$
 
 chromedriver:
   version: parent:../germanium-build-system/@chromedriver
   files:
-    bin/driver_versions: ^(CHROMEDRIVER_VERSION=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(CHROMEDRIVER_VERSION=)(.*?)$
 
 iedriver:
   version: parent:../germanium-build-system/@iedriver
   files:
-    bin/driver_versions: ^(IEDRIVER_VERSION=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(IEDRIVER_VERSION=)(.*?)$
 
 iedriver_major:
   version: parent:../germanium-build-system/@iedriver_major
   files:
-    bin/driver_versions: ^(IEDRIVER_VERSION_MAJOR=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(IEDRIVER_VERSION_MAJOR=)(.*?)$
 
 edgedriver:
   version: parent:../germanium-build-system/@edgedriver
   files:
-    bin/driver_versions: ^(EDGEDRIVER_VERSION=)(.*?)$
+    _gbs/build/prepare-build2/driver_versions: ^(EDGEDRIVER_VERSION=)(.*?)$
 
 edgedriver_eula:
   version: parent:../germanium-build-system/@edgedriver_eula
   files:
-    bin/driver_versions: EDGEDRIVER_EULA_VERSION=**VERSION$$
+    _gbs/build/prepare-build2/driver_versions: EDGEDRIVER_EULA_VERSION=**VERSION$$
     germaniumdrivers/install_driver.py: '"**VERSION** . If "'
 
 edgedriver_url:
   version: parent:../germanium-build-system/@edgedriver_url
   files:
     germaniumdrivers/driver_registry.py: 'return "**VERSION**"  #EDGE'
+
