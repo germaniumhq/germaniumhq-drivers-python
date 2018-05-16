@@ -72,6 +72,7 @@ stage("Test germanium-drivers") {
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
+                            python setup.py install
                         """
                     } finally {
                         junit "/src/reports/*.xml"
@@ -118,12 +119,13 @@ stage("Install into local Nexus") {
     input message: 'Install into local Nexus?'
 
     node {
-        dockerRun image: name,
+        dockerInside image: name,
             links: [
-                "nexus:nexus"
+                'nexus:nexus'
             ],
-            remove: true,
-            command: "/scripts/release-nexus.sh"
+            code: {
+                sh "/scripts/release-nexus.sh"
+            }
     }
 }
 
@@ -131,10 +133,10 @@ stage("Install into global PyPI") {
     input message: 'Install into global PyPI?'
 
     node {
-        dockerRun image: name,
-
-            remove: true,
-            command: "/scripts/release.sh"
+        dockerInside image: name,
+            code: {
+                sh "/scripts/release.sh"
+            }
     }
 }
 
