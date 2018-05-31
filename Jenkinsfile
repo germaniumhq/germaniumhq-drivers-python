@@ -85,6 +85,7 @@ stage("Test germanium-drivers") {
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
                             python setup.py install
+                            ls -ltr
                         """
                     } finally {
                         junit "/src/reports/*.xml"
@@ -109,6 +110,7 @@ stage("Test germanium-drivers") {
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
+                            ls -ltr
                         """
                     } finally {
                         junit "/src/reports/*.xml"
