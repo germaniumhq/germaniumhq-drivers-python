@@ -4,6 +4,7 @@ node_modules
 /germaniumdrivers.egg-info/
 /build/
 /dist/
+__pycache__
 .idea
 .jenny
 .mypy_cache

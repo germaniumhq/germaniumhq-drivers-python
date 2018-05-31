@@ -1,8 +1,10 @@
-build
-dist
-germaniumdrivers/binary
-*.pyc
-__pycache__
 node_modules
+*.pyc
+/germaniumdrivers/binary/
+/germaniumdrivers.egg-info/
+/build/
+/dist/
+__pycache__
 .idea
 .jenny
+.mypy_cache
