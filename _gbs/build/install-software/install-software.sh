@@ -5,7 +5,7 @@ set -e
 apt update -y
 apt upgrade -y
 
-# pmisc has killall
+# psmisc has killall
 apt install -y curl unzip wget psmisc
 
 #############################################################################

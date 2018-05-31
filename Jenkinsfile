@@ -19,6 +19,12 @@ stage("Build Germanium Drivers") {
             deleteDir()
             checkout scm
 
+            sh """
+                docker cp version_manager:/src/dist/version-manager /tmp/version-manager
+                chmod +x /tmp/version-manager
+                /tmp/version-manager -l ./version_values.yml
+            """
+
             withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
                                   variable: 'PYPIRC_RELEASE_FILE')]) {
                 sh """
@@ -34,6 +40,12 @@ stage("Build Germanium Drivers") {
         node {
             deleteDir()
             checkout scm
+
+            sh """
+                docker cp version_manager:/src/dist/version-manager /tmp/version-manager
+                chmod +x /tmp/version-manager
+                /tmp/version-manager -l ./version_values.yml
+            """
 
             docker.build('germanium_drivers_py2',
                          '-f Dockerfile.py2 .')
