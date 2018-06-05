@@ -20,9 +20,9 @@ stage("Build Germanium Drivers") {
             checkout scm
 
             sh """
-                docker cp version_manager:/src/dist/version-manager /tmp/version-manager
-                chmod +x /tmp/version-manager
-                /tmp/version-manager -l ./version_values.yml
+                docker cp version_manager:/src/dist/version-manager /tmp/version-manager_gd36
+                chmod +x /tmp/version-manager_gd36
+                /tmp/version-manager_gd36 -l ./version_values.yml
             """
 
             withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
@@ -42,9 +42,9 @@ stage("Build Germanium Drivers") {
             checkout scm
 
             sh """
-                docker cp version_manager:/src/dist/version-manager /tmp/version-manager
-                chmod +x /tmp/version-manager
-                /tmp/version-manager -l ./version_values.yml
+                docker cp version_manager:/src/dist/version-manager /tmp/version-manager_gd27
+                chmod +x /tmp/version-manager_gd27
+                /tmp/version-manager_gd27 -l ./version_values.yml
             """
 
             docker.build('germanium_drivers_py2',
