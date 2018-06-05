@@ -14,10 +14,10 @@ from .configurable_settings import get_germanium_drivers_folder, is_ms_edge_lice
 
 def install_driver(platform, browser):
     """
-    Installs the driver into a new folder that will also be added into the path.
-    :param platform:
-    :param browser:
-    :return:
+        Installs the driver into a new folder that will also be added into the path.
+        :param platform:
+        :param browser:
+        :return:
     """
     driver_name = driver_registry.get_driver_name(platform, browser)
 
