@@ -17,20 +17,9 @@ stage("Build Germanium Drivers") {
     parallel 'Python 3.6': {
         node {
             sh """
-                ls -la
-                pwd
-                rm -fr .* *
-            """
-            sh """
-                ls -la
-                pwd
+                rm -fr *
             """
             checkout scm
-            sh """
-                ls -la
-                pwd
-                cat ./germaniumdrivers/install_driver.py
-            """
 
             versionManager("-l ./version_values.yml")
 
