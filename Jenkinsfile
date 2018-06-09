@@ -19,7 +19,7 @@ stage("Build Germanium Drivers") {
             sh """
                 ls -la
                 pwd
-                rm -fr .
+                rm -fr .* *
             """
             sh """
                 ls -la
