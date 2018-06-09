@@ -1,1 +1,1 @@
-FROM germaniumhq/python-build:2.7
+FROM sami:5000/germaniumhq/python-build:2.7
