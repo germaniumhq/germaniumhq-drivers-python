@@ -19,8 +19,8 @@ stage("Build Germanium Drivers") {
             sh """
                 ls -la
                 pwd
+                rm -fr .
             """
-            cleanDir()
             sh """
                 ls -la
                 pwd
