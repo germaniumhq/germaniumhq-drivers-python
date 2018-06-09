@@ -16,8 +16,21 @@ RUN_CHROME_TESTS = Boolean.valueOf(RUN_CHROME_TESTS)
 stage("Build Germanium Drivers") {
     parallel 'Python 3.6': {
         node {
+            sh """
+                ls -la
+                pwd
+            """
             deleteDir()
+            sh """
+                ls -la
+                pwd
+            """
             checkout scm
+            sh """
+                ls -la
+                pwd
+                cat ./germaniumdrivers/install_driver.py
+            """
 
             versionManager("-l ./version_values.yml")
 
