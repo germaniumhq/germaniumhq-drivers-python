@@ -7,6 +7,15 @@ properties([
                 description: 'Should the firefox tests run'),
         booleanParam(name: 'RUN_CHROME_TESTS', defaultValue: true,
                 description: 'Should the chrome tests run')
+    ]),
+
+    pipelineTriggers([
+        upstream(
+            threshold: 'SUCCESS',
+            upstreamProjects: [
+                '/build-system/germaniumhq-python-build-system'
+            ]
+        )
     ])
 ])
 
