@@ -14,10 +14,10 @@ from .configurable_settings import get_germanium_drivers_folder, is_ms_edge_lice
 
 def install_driver(platform, browser):
     """
-        Installs the driver into a new folder that will also be added into the path.
-        :param platform:
-        :param browser:
-        :return:
+    Installs the driver into a new folder that will also be added into the path.
+    :param platform:
+    :param browser:
+    :return:
     """
     driver_name = driver_registry.get_driver_name(platform, browser)
 
@@ -64,7 +64,9 @@ def install_driver(platform, browser):
 
 
 def load_data(path_or_url):
-    """ Loads the bytes for from the internal resource, or the given URL """
+    """
+    Loads the bytes for from the internal resource, or the given URL
+    """
     if path_or_url.startswith("http://") or path_or_url.startswith("https://"): #  url
         validate_license_agreement()
         data = urllib2.urlopen(path_or_url).read()
