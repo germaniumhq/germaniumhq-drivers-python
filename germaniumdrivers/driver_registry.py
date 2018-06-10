@@ -13,7 +13,67 @@ class AvailableDriver(object):
 def get_driver_name(platform, browser):
     if platform.operating_system == "linux":
         if browser == "chrome":
-            return "https://download.microsoft.com/download/3/2/D/32D3E464-F2EF-490F-841B-05D53C848D15/MicrosoftWebDriver.exe"  #EDGE
+            return "chromedriver"
+        elif browser == "firefox":
+            return "geckodriver"
+        else:
+            return None
+    elif platform.operating_system == "mac":
+        if browser == "chrome":
+            return "chromedriver"
+        elif browser == "firefox":
+            return "geckodriver"
+        else:
+            return None
+    elif platform.operating_system == "win":
+        if browser == "chrome":
+            return "chromedriver.exe"
+        elif browser == "firefox":
+            return "geckodriver.exe"
+        elif browser == "ie":
+            return "IEDriverServer.exe"
+        elif browser == "edge":
+            return "MicrosoftWebDriver.exe"
+        else:
+            return None
+    else:
+        return None
+
+
+def get_internal_driver_path(platform, browser):
+    if browser == "chrome":
+        if platform.operating_system == "linux":
+            if platform.bits == "32":
+                return "binary/chrome/linux/32/chromedriver"
+            elif platform.bits == "64":
+                return "binary/chrome/linux/64/chromedriver"
+            else:
+                raise unknown_browser(platform, browser)
+        elif platform.operating_system == "mac":
+            return "binary/chrome/mac/64/chromedriver"
+        elif platform.operating_system == "win":
+            return "binary/chrome/win/32/chromedriver.exe"
+        else:
+            raise unknown_browser(platform, browser)
+    elif browser == "firefox":
+        if platform.operating_system == "linux":
+            return "binary/firefox/linux/64/geckodriver"
+        elif platform.operating_system == "mac":
+            return "binary/firefox/mac/32/geckodriver"
+        elif platform.operating_system == "win":
+            return "binary/firefox/win/64/geckodriver.exe"
+        else:
+            raise unknown_browser(platform, browser)
+    elif browser == "ie":
+        if platform.operating_system == "win":
+            if not is_germanium_use_ie_driver_for_platform():
+                return "binary/ie/win/32/IEDriverServer.exe"
+            elif platform.bits == "32":
+                return "binary/ie/win/32/IEDriverServer.exe"
+            elif platform.bits == "64":
+                return "binary/ie/win/64/IEDriverServer.exe"
+    elif browser == "edge":
+        return "https://download.microsoft.com/download/3/4/2/342316D7-EBE0-4F10-ABA2-AE8E0CDF36DD/MicrosoftWebDriver.exe"  #EDGE
 
     raise unknown_browser(platform, browser)
 
