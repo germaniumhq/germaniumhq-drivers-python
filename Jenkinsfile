@@ -86,7 +86,7 @@ stage("Test germanium-drivers") {
                             ls -ltr /src/reports
                         """
                     } finally {
-                        junit "/src/reports/*.xml"
+                        junit "reports/*.xml"
                     }
                 }
         }
@@ -111,7 +111,7 @@ stage("Test germanium-drivers") {
                             ls -ltr /src/reports
                         """
                     } finally {
-                        junit "/src/reports/*.xml"
+                        junit "reports/*.xml"
                     }
                 }
         }
