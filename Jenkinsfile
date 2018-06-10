@@ -23,9 +23,6 @@ RUN_CHROME_TESTS = Boolean.valueOf(RUN_CHROME_TESTS)
 stage("Build Germanium Drivers") {
     parallel 'Python 3.6': {
         node {
-            sh """
-                rm -fr *
-            """
             checkout scm
 
             versionManager("-l ./version_values.yml")
