@@ -87,7 +87,7 @@ stage("Test germanium-drivers") {
                             python setup.py install
                         """
                     } finally {
-                        junit "/src/reports/*.xml"
+                        junit "reports/*.xml"
                     }
                 }
         }
