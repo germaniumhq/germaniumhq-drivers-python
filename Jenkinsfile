@@ -79,6 +79,7 @@ stage("Test germanium-drivers") {
                 code: {
                     try {
                         sh """
+                            echo "workspace is \$WORKSPACE"
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
@@ -105,6 +106,7 @@ stage("Test germanium-drivers") {
                 code: {
                     try {
                         sh """
+                            echo "workspace is \$WORKSPACE"
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
