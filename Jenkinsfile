@@ -83,11 +83,11 @@ stage("Test germanium-drivers") {
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
-                            mv /src/reports \$CURDIR
+                            mv /src/reports \$CURDIR/reports36
                             python setup.py install
                         """
                     } finally {
-                        junit "reports/*.xml"
+                        junit "reports36/*.xml"
                     }
                 }
         }
@@ -110,10 +110,10 @@ stage("Test germanium-drivers") {
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
-                            mv /src/reports \$CURDIR
+                            mv /src/reports \$CURDIR/reports27
                         """
                     } finally {
-                        junit "reports/*.xml"
+                        junit "reports27/*.xml"
                     }
                 }
         }
