@@ -79,12 +79,12 @@ stage("Test germanium-drivers") {
                 code: {
                     try {
                         sh """
-                            echo "workspace is \$WORKSPACE"
+                            CURDIR=`pwd`
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
+                            mv /src/reports \$CURDIR
                             python setup.py install
-                            ls -ltr /src/reports
                         """
                     } finally {
                         junit "/src/reports/*.xml"
@@ -106,17 +106,14 @@ stage("Test germanium-drivers") {
                 code: {
                     try {
                         sh """
-                            echo "workspace is \$WORKSPACE"
+                            CURDIR=`pwd`
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
-                            ls -ltr /src/reports
+                            mv /src/reports \$CURDIR
                         """
                     } finally {
-                        sh """
-                            ls -ltr /src/reports
-                        """
-                        junit "/src/reports/*.xml"
+                        junit "reports/*.xml"
                     }
                 }
         }
