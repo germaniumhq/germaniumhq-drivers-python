@@ -1,6 +1,6 @@
 
 properties([
-    safeParameters(binding, [
+    safeParameters(this, [
         string(name: 'IMAGE_NAME', defaultValue: '',
                 description: 'Container image name. By default it is ge-drivers-<uid>'),
         booleanParam(name: 'RUN_FIREFOX_TESTS', defaultValue: true,
@@ -17,10 +17,7 @@ properties([
     ])
 ])
 
-safeParametersCheck(binding)
-
-RUN_FIREFOX_TESTS = Boolean.valueOf(RUN_FIREFOX_TESTS)
-RUN_CHROME_TESTS = Boolean.valueOf(RUN_CHROME_TESTS)
+safeParametersCheck(this)
 
 stage("Build Germanium Drivers") {
     parallel 'Python 3.6': {
