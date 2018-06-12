@@ -79,6 +79,7 @@ stage("Test germanium-drivers") {
                     try {
                         sh """
                             CURDIR=`pwd`
+                            rm -fr ./reports36
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
@@ -106,6 +107,7 @@ stage("Test germanium-drivers") {
                     try {
                         sh """
                             CURDIR=`pwd`
+                            rm -fr ./reports27
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
