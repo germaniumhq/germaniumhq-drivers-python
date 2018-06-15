@@ -54,8 +54,8 @@ stage("Build Germanium Drivers") {
 // container name definition
 // -------------------------------------------------------------------
 def name
-if (IMAGE_NAME) {
-    name = 'ge-drivers-' + IMAGE_NAME
+if (params.IMAGE_NAME) {
+    name = 'ge-drivers-' + params.IMAGE_NAME
 } else {
     name = 'ge-drivers-' + getGuid()
 }
@@ -76,18 +76,15 @@ stage("Test germanium-drivers") {
                 name: name,
                 privileged: true,
                 code: {
-                    try {
+                    junitReports("/src/reports") {
                         sh """
-                            CURDIR=`pwd`
-                            rm -fr ./reports36
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
-                            mv /src/reports \$CURDIR/reports36
                             python setup.py install
                         """
-                    } finally {
-                        junit "reports36/*.xml"
+
+                        dockerCommit name name
                     }
                 }
         }
@@ -104,29 +101,16 @@ stage("Test germanium-drivers") {
                 name: "${name}2",
                 privileged: true,
                 code: {
-                    try {
+                    junitReports("/src/reports") {
                         sh """
-                            CURDIR=`pwd`
-                            rm -fr ./reports27
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
-                            mv /src/reports \$CURDIR/reports27
                         """
-                    } finally {
-                        junit "reports27/*.xml"
                     }
                 }
         }
 
-    }
-}
-
-stage("Commit Image") {
-    node {
-        sh """
-            docker commit ${name} ${name}
-        """
     }
 }
 
