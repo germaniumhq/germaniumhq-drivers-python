@@ -119,8 +119,8 @@ stage("Install into local Nexus") {
                 withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
                                       variable: 'PYPIRC_RELEASE_FILE')]) {
                     sh """
-                        cp ${env.PYPIRC_RELEASE_FILE} /germanium/.pypirc_release
-                        chmod 666 /germanium/.pypirc_release
+                        cp ${env.PYPIRC_RELEASE_FILE} /germanium/.pypirc
+                        chmod 666 /germanium/.pypirc
 
                         /src/bin/release_nexus.sh
                     """
