@@ -84,7 +84,7 @@ stage("Test germanium-drivers") {
                             python setup.py install
                         """
 
-                        dockerCommit name name
+                        dockerCommit name: name, image: name
                     }
                 }
         }
