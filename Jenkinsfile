@@ -123,7 +123,7 @@ stage("Install into local Nexus") {
                 'nexus:nexus'
             ],
             code: {
-                sh "/scripts/release-nexus.sh"
+                sh "/src/bin/release_nexus.sh"
             }
     }
 }
@@ -134,7 +134,7 @@ stage("Install into global PyPI") {
     node {
         dockerInside image: name,
             code: {
-                sh "/scripts/release.sh"
+                sh "/src/bin/release.sh"
             }
     }
 }
