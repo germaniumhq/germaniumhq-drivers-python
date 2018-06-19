@@ -22,17 +22,10 @@ safeParametersCheck(this)
 stage("Build Germanium Drivers") {
     parallel 'Python 3.6': {
         node {
+            deleteDir()
             checkout scm
 
             versionManager("-l ./version_values.yml")
-
-            withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
-                                  variable: 'PYPIRC_RELEASE_FILE')]) {
-                sh """
-                    cp ${env.PYPIRC_RELEASE_FILE} ./jenkins/scripts/_pypirc_release
-                    chmod 666 ./jenkins/scripts/_pypirc_release
-                """
-            }
 
             docker.build('germanium_drivers_py3',
                          '-f Dockerfile .')
@@ -123,7 +116,15 @@ stage("Install into local Nexus") {
                 'nexus:nexus'
             ],
             code: {
-                sh "/src/bin/release_nexus.sh"
+                withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
+                                      variable: 'PYPIRC_RELEASE_FILE')]) {
+                    sh """
+                        cp ${env.PYPIRC_RELEASE_FILE} /germanium/.pypirc_release
+                        chmod 666 /germanium/.pypirc_release
+
+                        /src/bin/release_nexus.sh
+                    """
+                }
             }
     }
 }
