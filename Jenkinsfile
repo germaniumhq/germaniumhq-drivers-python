@@ -12,7 +12,7 @@ properties([
     pipelineTriggers([
         upstream(
             threshold: 'SUCCESS',
-            upstreamProjects: '/build-system/germaniumhq-python-build-system'
+            upstreamProjects: 'germaniumhq-python-build-system'
         )
     ])
 ])
