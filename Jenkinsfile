@@ -68,6 +68,9 @@ stage("Test germanium-drivers") {
                 ],
                 name: name,
                 privileged: true,
+                volumes: [
+                    '/dev/shm:/dev/shm:rw'
+                ],
                 code: {
                     junitReports("/src/reports") {
                         sh """
@@ -93,6 +96,9 @@ stage("Test germanium-drivers") {
                 ],
                 name: "${name}2",
                 privileged: true,
+                volumes: [
+                    '/dev/shm:/dev/shm:rw'
+                ],
                 code: {
                     junitReports("/src/reports") {
                         sh """
