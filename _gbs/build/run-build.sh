@@ -1,1 +1,2 @@
-
+cd /src
+python setup.py install
