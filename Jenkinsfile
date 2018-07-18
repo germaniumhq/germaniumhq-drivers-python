@@ -111,8 +111,6 @@ stage("Test germanium-drivers") {
 }
 
 stage("Install into local Nexus") {
-    input message: 'Install into local Nexus?'
-
     node {
         dockerInside image: name,
             links: [
@@ -125,7 +123,8 @@ stage("Install into local Nexus") {
                         cp ${env.PYPIRC_RELEASE_FILE} /germanium/.pypirc
                         chmod 666 /germanium/.pypirc
 
-                        /src/bin/release_nexus.sh
+                        cd /src
+                        python setup.py sdist upload -r nexus
                     """
                 }
             }
