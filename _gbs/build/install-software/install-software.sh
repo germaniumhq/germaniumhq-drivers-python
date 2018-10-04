@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+REFRESH_DATE="2018.10.04-05:58:42"
+
 set -e
 
 apt update -y

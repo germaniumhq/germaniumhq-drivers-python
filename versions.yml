@@ -1,16 +1,16 @@
-selenium:
-  version: parent:../germanium-build-system/@selenium
-  files:
-    requirements.txt: selenium==**VERSION$$
-    version_values.yml: "selenium: '**VERSION**'"
-
 germaniumdrivers:
-  version: parent:../germanium-build-system/@germaniumdrivers
+  version: $(version-manager --tag)
   files:
     README.md: ^(germanium )(.*?)$
     README.rst: ^(germanium )(.*?)$
     setup.py: version='**VERSION**',
     version_values.yml: "germaniumdrivers: '**VERSION**'"
+
+selenium:
+  version: parent:../germanium-build-system/@selenium
+  files:
+    requirements.txt: selenium==**VERSION$$
+    version_values.yml: "selenium: '**VERSION**'"
 
 #
 # Drivers must be kept in sync across the germanium-build-system.
