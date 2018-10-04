@@ -3,9 +3,9 @@ import pkg_resources
 import stat
 
 try:
-    import urllib.request as urllib2
+    import urllib.request as urllib2  # type: ignore
 except ImportError:
-    import urllib2
+    import urllib2  # type: ignore
 
 from . import driver_registry
 from .driver_registry import get_internal_driver_path, is_driver_up_to_date
