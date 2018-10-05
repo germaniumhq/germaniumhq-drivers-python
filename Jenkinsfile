@@ -63,10 +63,10 @@ stage("Test germanium-drivers") {
             dockerRm containers: [name]
             dockerInside image: 'germanium_drivers_py3',
                 env: [
-                    "DISPLAY=vnc:0"
+                    "DISPLAY=vnc-server:0"
                 ],
                 links: [
-                    "vnc-server:vnc"
+                    "vnc-server"
                 ],
                 name: name,
                 privileged: true,
@@ -76,6 +76,7 @@ stage("Test germanium-drivers") {
                 code: {
                     junitReports("/src/reports") {
                         sh """
+                            echo "DISPLAY=$DISPLAY"
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
