@@ -76,7 +76,8 @@ stage("Test germanium-drivers") {
                 code: {
                     junitReports("/src/reports") {
                         sh """
-                            echo "DISPLAY=$DISPLAY"
+                            echo "Environment is: "
+                            set
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
@@ -102,6 +103,8 @@ stage("Test germanium-drivers") {
                 code: {
                     junitReports("/src/reports") {
                         sh """
+                            echo "Environment is: "
+                            set
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
