@@ -63,7 +63,7 @@ stage("Test germanium-drivers") {
             dockerRm containers: [name]
             dockerInside image: 'germanium_drivers_py3',
                 env: [
-                    "DISPLAY=vnc-server:0"
+                    "DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0"
                 ],
                 links: [
                     "vnc-server"
@@ -76,8 +76,6 @@ stage("Test germanium-drivers") {
                 code: {
                     junitReports("/src/reports") {
                         sh """
-                            echo "Environment is: "
-                            set
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
@@ -90,7 +88,7 @@ stage("Test germanium-drivers") {
             dockerRm containers: ["${name}2"]
             dockerInside image: 'germanium_drivers_py2',
                 env: [
-                    "DISPLAY=vnc:0"
+                    "DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0"
                 ],
                 links: [
                     "vnc-server:vnc"
@@ -103,8 +101,6 @@ stage("Test germanium-drivers") {
                 code: {
                     junitReports("/src/reports") {
                         sh """
-                            echo "Environment is: "
-                            set
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
