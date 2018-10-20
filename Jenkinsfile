@@ -62,9 +62,6 @@ stage("Test germanium-drivers") {
         node {
             dockerRm containers: [name]
             dockerInside image: 'germanium_drivers_py3',
-                env: [
-                    "DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0"
-                ],
                 links: [
                     "vnc-server"
                 ],
@@ -75,8 +72,10 @@ stage("Test germanium-drivers") {
                 ],
                 code: {
                     junitReports("/src/reports") {
+                        // we export the DISPLAY, because we can't do variable references in the
+                        // docker.image(..).inside(HERE) because they are not yet defined.
                         sh """
-                            cd /src
+                            export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
                         """
@@ -100,7 +99,10 @@ stage("Test germanium-drivers") {
                 ],
                 code: {
                     junitReports("/src/reports") {
+                        // we export the DISPLAY, because we can't do variable references in the
+                        // docker.image(..).inside(HERE) because they are not yet defined.
                         sh """
+                            export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
                             cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
