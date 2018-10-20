@@ -76,6 +76,7 @@ stage("Test germanium-drivers") {
                         // docker.image(..).inside(HERE) because they are not yet defined.
                         sh """
                             export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
+                            cd /src
                             . bin/prepare_firefox.sh
                             behave --junit --no-color -t ~@ie -t ~@edge
                         """
@@ -90,7 +91,7 @@ stage("Test germanium-drivers") {
                     "DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0"
                 ],
                 links: [
-                    "vnc-server:vnc"
+                    "vnc-server"
                 ],
                 name: "${name}2",
                 privileged: true,
