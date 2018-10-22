@@ -32,14 +32,12 @@ germaniumPyExePipeline(
             dockerTag: "germanium_drivers_py3",
             versionManager: "-l ./version_values.yml",
             publishPypi: "sdist",
-            postBuild: testDrivers("germanium_drivers_py3")
         ],
         "Python 2.7": [
             dockerTag: "germanium_drivers_py2",
             versionManager: "-l ./version_values.yml",
             publishPypi: "sdist",
             gbs: "/Dockerfile.py2",
-            postBuild: testDrivers("germanium_drivers_py2")
         ]
     ],
     postBuild: {
