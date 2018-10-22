@@ -9,13 +9,6 @@ properties([
                 description: 'Should the firefox tests run'),
         booleanParam(name: 'RUN_CHROME_TESTS', defaultValue: true,
                 description: 'Should the chrome tests run')
-    ]),
-
-    pipelineTriggers([
-        upstream(
-            threshold: 'SUCCESS',
-            upstreamProjects: '/build-system/germaniumhq-python-build-system/master'
-        )
     ])
 ])
 
@@ -117,22 +110,9 @@ stage("Test germanium-drivers") {
 
 stage("Install into local Nexus") {
     node {
-        dockerInside image: name,
-            links: [
-                'nexus:nexus'
-            ],
-            code: {
-                withCredentials([file(credentialsId: 'PYPIRC_RELEASE_FILE',
-                                      variable: 'PYPIRC_RELEASE_FILE')]) {
-                    sh """
-                        cp ${env.PYPIRC_RELEASE_FILE} /germanium/.pypirc
-                        chmod 666 /germanium/.pypirc
-
-                        cd /src
-                        python setup.py sdist upload -r nexus
-                    """
-                }
-            }
+        docker.image(name).inside('--link nexus:nexus') {
+            publishPypi([type: "sdist", server: "nexus"])
+        }
     }
 }
 
@@ -140,10 +120,10 @@ stage("Install into global PyPI") {
     input message: 'Install into global PyPI?'
 
     node {
-        dockerInside image: name,
-            code: {
-                sh "/src/bin/release.sh"
-            }
+        docker.image(name).inside {
+            publishPypi([type: "sdist", server: "pypitest"])
+            publishPypi([type: "sdist", server: "pypimain"])
+        }
     }
 }
 
