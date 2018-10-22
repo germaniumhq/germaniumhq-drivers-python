@@ -41,10 +41,12 @@ germaniumPyExePipeline(
         ]
     ],
     postBuild: {
-        parallel([
-            "Python 2.7": testDrivers("germanium_drivers_py2"),
-            "Python 3": testDrivers("germanium_drivers_py3"),
-        ])
+        stage('Integration Test') {
+            parallel([
+                "Python 2.7": testDrivers("germanium_drivers_py2"),
+                "Python 3": testDrivers("germanium_drivers_py3"),
+            ])
+        }
     }
 )
 
