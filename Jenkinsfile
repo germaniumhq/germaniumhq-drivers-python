@@ -1,64 +1,10 @@
-// -------------------------------------------------------------------
-// properties
-// -------------------------------------------------------------------
-properties([
-    safeParameters(this, [
-        string(name: 'IMAGE_NAME', defaultValue: '',
-                description: 'Container image name. By default it is ge-drivers-<uid>'),
-        booleanParam(name: 'RUN_FIREFOX_TESTS', defaultValue: true,
-                description: 'Should the firefox tests run'),
-        booleanParam(name: 'RUN_CHROME_TESTS', defaultValue: true,
-                description: 'Should the chrome tests run')
-    ])
-])
-
-safeParametersCheck(this)
-
-stage("Build Germanium Drivers") {
-    parallel 'Python 3.6': {
+def testDrivers(container_image) {
+    return {
         node {
-            deleteDir()
-            checkout scm
-
-            versionManager("-l ./version_values.yml")
-
-            docker.build('germanium_drivers_py3',
-                         '-f Dockerfile .')
-        }
-    }, 'Python 2.7': {
-        node {
-            deleteDir()
-            checkout scm
-
-            versionManager("-l ./version_values.yml")
-
-            docker.build('germanium_drivers_py2',
-                         '-f Dockerfile.py2 .')
-        }
-    }
-}
-
-// -------------------------------------------------------------------
-// container name definition
-// -------------------------------------------------------------------
-def name
-if (params.IMAGE_NAME) {
-    name = 'ge-drivers-' + params.IMAGE_NAME
-} else {
-    name = 'ge-drivers-' + getGuid()
-}
-
-println "Building container with name: ${name}"
-
-stage("Test germanium-drivers") {
-    parallel 'Python 3.6 Tests': {
-        node {
-            dockerRm containers: [name]
-            dockerInside image: 'germanium_drivers_py3',
+            dockerInside image: container_image,
                 links: [
                     "vnc-server"
                 ],
-                name: name,
                 privileged: true,
                 volumes: [
                     '/dev/shm:/dev/shm:rw'
@@ -76,54 +22,31 @@ stage("Test germanium-drivers") {
                     }
                 }
         }
-    }, 'Python 2.7 Tests': {
-        node {
-            dockerRm containers: ["${name}2"]
-            dockerInside image: 'germanium_drivers_py2',
-                env: [
-                    "DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0"
-                ],
-                links: [
-                    "vnc-server"
-                ],
-                name: "${name}2",
-                privileged: true,
-                volumes: [
-                    '/dev/shm:/dev/shm:rw'
-                ],
-                code: {
-                    junitReports("/src/reports") {
-                        // we export the DISPLAY, because we can't do variable references in the
-                        // docker.image(..).inside(HERE) because they are not yet defined.
-                        sh """
-                            export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
-                            cd /src
-                            . bin/prepare_firefox.sh
-                            behave --junit --no-color -t ~@ie -t ~@edge
-                        """
-                    }
-                }
-        }
-
     }
 }
 
-stage("Install into local Nexus") {
-    node {
-        docker.image(name).inside('--link nexus:nexus') {
-            publishPypi([type: "sdist", server: "nexus"])
-        }
+germaniumPyExePipeline(
+    runFlake8: false,
+    binaries: [
+        "Python 3": [
+            dockerTag: "germanium_drivers_py3",
+            versionManager: "-l ./version_values.yml",
+            publishPypi: "sdist",
+            postBuild: testDrivers("germanium_drivers_py3")
+        ],
+        "Python 2.7": [
+            dockerTag: "germanium_drivers_py2",
+            versionManager: "-l ./version_values.yml",
+            publishPypi: "sdist",
+            gbs: "/Dockerfile.py2",
+            postBuild: testDrivers("germanium_drivers_py2")
+        ]
+    ],
+    postBuild: {
+        parallel([
+            "Python 2.7": testDrivers("germanium_drivers_py2"),
+            "Python 3": testDrivers("germanium_drivers_py3"),
+        ])
     }
-}
-
-stage("Install into global PyPI") {
-    input message: 'Install into global PyPI?'
-
-    node {
-        docker.image(name).inside {
-            publishPypi([type: "sdist", server: "pypitest"])
-            publishPypi([type: "sdist", server: "pypimain"])
-        }
-    }
-}
+)
 
