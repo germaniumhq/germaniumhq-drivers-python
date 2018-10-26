@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/../../..)
+GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/../..)
 
 set -e
 
