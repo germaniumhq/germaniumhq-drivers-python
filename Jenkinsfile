@@ -40,13 +40,13 @@ germaniumPyExePipeline(
 
     binaries: [
         "Python 3": [
-            platform: "python: 3.6",
+            platform: "python:3.6",
             dockerTag: "germanium_drivers_py3",
             versionManager: "-l ./version_values.yml",
             publishPypi: "sdist",
         ],
         "Python 2.7": [
-            platform: "python: 2.7",
+            platform: "python:2.7",
             dockerTag: "germanium_drivers_py2",
             versionManager: "-l ./version_values.yml",
             publishPypi: "sdist",
