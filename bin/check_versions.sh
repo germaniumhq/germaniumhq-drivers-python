@@ -4,7 +4,7 @@ GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/..)
 
 set -e
 
-. $GERMANIUM_FOLDER/_gbs/build/prepare-build2/driver_versions
+. $GERMANIUM_FOLDER/_gbs/prepare-build2/driver_versions
 
 #
 # Check the Chrome Driver version.
