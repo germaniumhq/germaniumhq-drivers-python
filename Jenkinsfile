@@ -5,27 +5,36 @@ germaniumPyExePipeline(
 
     preBuild: {
         stage('Test') {
-            ["python:2.7", "python:3.6"].each { platform ->
-                node {
-                    checkoutWithVersionManager("-l ./version_values.yml")
+            def parallelTests = [:]
 
-                    gbs().test([
-                        platform: platform,
-                        dockerTag: "germanium_drivers_test_${platform}"
-                    ]).inside("--link vnc-server -v /dev/shm:/dev/shm --privileged") {
-                        junitReports("/src/reports") {
-                            // we export the DISPLAY, because we can't do variable references in the
-                            // docker.image(..).inside(HERE) because they are not yet defined.
-                            sh """
-                                export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
-                                cd /src
-                                . bin/prepare_firefox.sh
-                                behave --junit --no-color -t ~@ie -t ~@edge
-                            """
+            [
+                "python:2.7",
+                "python:3.6"
+            ].each { platform ->
+                parallelTests[platform] = {
+                    node {
+                        checkoutWithVersionManager("-l ./version_values.yml")
+
+                        gbs().test([
+                            platform: platform,
+                            dockerTag: "germanium_drivers_test_${platform}"
+                        ]).inside("--link vnc-server -v /dev/shm:/dev/shm --privileged") {
+                            junitReports("/src/reports") {
+                                // we export the DISPLAY, because we can't do variable references in the
+                                // docker.image(..).inside(HERE) because they are not yet defined.
+                                sh """
+                                    export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
+                                    cd /src
+                                    . bin/prepare_firefox.sh
+                                    behave --junit --no-color -t ~@ie -t ~@edge
+                                """
+                            }
                         }
                     }
                 }
             }
+
+            parallel(parallelTests)
         }
     },
 
