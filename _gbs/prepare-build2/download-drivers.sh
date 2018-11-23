@@ -4,6 +4,7 @@ GERMANIUM_FOLDER=$(readlink -f $(dirname $0)/../..)
 
 set -e
 
+cat $GERMANIUM_FOLDER/_gbs/prepare-build2/driver_versions
 . $GERMANIUM_FOLDER/_gbs/prepare-build2/driver_versions
 
 rm -fr $GERMANIUM_FOLDER/germaniumdrivers/binary
