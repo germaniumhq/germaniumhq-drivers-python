@@ -4,7 +4,6 @@ germaniumdrivers:
     README.md: ^(germanium )(.*?)$
     README.rst: ^(germanium )(.*?)$
     setup.py: version='**VERSION**',
-    version_values.yml: "germaniumdrivers: '**VERSION**'"
 
 selenium:
   version: parent:../germanium-build-system/@selenium
