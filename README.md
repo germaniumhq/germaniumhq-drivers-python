@@ -27,4 +27,3 @@ close_browser()
 
 Here is the [usage documentation](http://germaniumhq.com/documentation/), or as [PDF](http://germaniumhq.com/documentation/germanium-usage.pdf)
 
-
