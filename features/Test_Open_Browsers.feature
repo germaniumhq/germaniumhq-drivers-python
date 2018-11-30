@@ -1,7 +1,7 @@
 Feature: Tests if the browsers do open on the current platform
   using selenium.
 
-  @1 @firefox @nochrome @noie @noedge
+  @1 @nofirefox @nochrome @noie @noedge
   Scenario: Open Firefox using the embedded driver with marionette
     Given I open Firefox
     And I go to google
