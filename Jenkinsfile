@@ -23,7 +23,7 @@ germaniumPyExePipeline(
                                 export DISPLAY=\$VNC_SERVER_PORT_6000_TCP_ADDR:0
                                 cd /src
                                 . bin/prepare_firefox.sh
-                                behave --junit --no-color -t ~@ie -t ~@edge
+                                behave --junit --no-color -t ~@ie -t ~@edge -t ~@nofirefox
                             """
                         }
                     }
