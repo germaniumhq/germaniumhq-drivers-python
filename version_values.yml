@@ -1,4 +1,4 @@
-selenium: '3.14.1'
+selenium: '3.141.0'
 firefox: '63.0'
 firefox_driver: '0.23.0'
 chromedriver: '2.43'
